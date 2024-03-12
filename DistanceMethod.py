@@ -675,7 +675,7 @@ plt.plot(Vec, VecStd, 'b', label=r'GS and Feature Importance')
 plt.plot(Vec, VecStdN, 'g', label=r'No GS or Feature Importance')
 plt.plot(Vec, VecStdGSv, 'r', label=r'Ten Points, GS and Feature Importance')
 plt.plot(Vec, VecStdv, 'k', label=r'Ten Points, No GS or Feature Importance')
-plt.ylim(0,0.18)
+
 legend18 = plt.legend(loc='upper left', shadow=True, fontsize='medium')
 legend18.get_frame().set_facecolor('w')
 ax2.grid()
