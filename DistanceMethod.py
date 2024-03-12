@@ -857,60 +857,17 @@ def gram_schmidt(A):
         A[:, j] = A[:, j] / np.linalg.norm(A[:, j])
     return A
 
-#gstest=np.array(trainint)
+
 gstest=gs(np.array(trainint))
-#gstest=gram_schmidt(np.array(trainint))
-#gstest=np.array(trainint)
 gsarr=np.zeros((np.array(gstest).shape[0],np.array(gstest).shape[0]))
-#gsarr=np.zeros((500,500))
+
 print(np.array(gsarr).shape[0],'int array test')
 print(np.array(gstest).shape,np.array(gstest)[0],'int array gs')
 
 print(np.array(gstest[0]))
 
 
-#gstest= st_x.fit_transform(gstest)
-sampler = SMOTE()
-#gstest= sampler.fit_resample(gstest)
 
-
-
-
-#gstest = np.apply_along_axis(encode_scalar_column, axis=0, arr=gstest)
-#gstest = gstest.reshape((-1, gstest.shape[-2] * gstest.shape[-1]), order="F")
-
-
-'''
-for i in range(np.array(gstest).shape[1]):
-    #gstest.T[i]=gstest.T[i]*math.exp(pow(r.importances_mean[i],0.5))
-    #gstest.T[i] = gstest.T[i] * (1.0*pow(r.importances_mean[i],0.5) + 0.0)
-    gstest.T[i] = gstest.T[i] * (1.0 * pow(abs(r.importances_mean[i]), 0.5) + 0.0)
-print(np.array(gstest[0]))
-'''
-
-gsarr0 = np.zeros((np.array(gstest).shape[0], np.array(gstest).shape[0]))
-for i in range(np.array(gsarr).shape[0]):
-    for j in range(np.array(gsarr).shape[0]):
-        # for i in range(500):
-        #   for j in range(500):
-        # gsarr[i][j] = math.exp(mean_absolute_error(np.array(gstest)[i], np.array(gstest)[j]))
-        if (i != j and (np.array_equal(gstest[i], gstest[j]) == False)):
-            # gsarr0[i][j] = pow(math.exp(pow(mean_absolute_error(pow(np.array(gstest)[i],1.0), pow(np.array(gstest)[j],1.0)),0.5) ),-1.0)
-            gsarr0[i][j] = pow(np.linalg.norm(np.array(gstest)[i] - np.array(gstest)[j]),
-                               -1.0)
-            # gsarr[i][j] = pow(math.exp(pow(mean_absolute_error(pow(np.array(gstest)[i],1.0), pow(np.array(gstest)[j],1.0))
-            #                            *pow((abs(scipy.stats.pearsonr(np.array(gstest)[i],np.array(gstest)[j])[0]
-            #                                    +scipy.stats.spearmanr(np.array(gstest)[i], np.array(gstest)[j])[0]
-            #                                 )),-1.0),0.5) ),-1.0)
-        elif (i == j):
-            gsarr0[i][j] = 0
-        # gsarr[i][j] = (0.0)*(abs(scipy.stats.spearmanr(np.array(gstest)[i], np.array(gstest)[j])[0]))\
-        #             + pow(mean_squared_error(pow(np.array(gstest)[i],1.0), pow(np.array(gstest)[j],1.0)),0.5)+\
-        #              +   (1.0-r2_score(np.array(gstest)[i], np.array(gstest)[j]) )+ \
-        #           pow(mean_absolute_error(np.array(gstest)[i], np.array(gstest)[j]),0.5) \
-        #          +0.0*(abs(spatial.distance.cosine(np.array(gstest)[i], np.array(gstest)[j])))
-    #   print(i,j,'ij')
-#       gsarr[i][j] = r2_score(np.array(gstest)[i], np.array(gstest)[j])
 gsarr0 = np.zeros((np.array(gstest).shape[0], np.array(gstest).shape[0]))
 for i in range(np.array(gsarr).shape[0]):
     for j in range(np.array(gsarr).shape[0]):
