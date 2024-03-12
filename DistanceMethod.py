@@ -195,8 +195,7 @@ X_test1=dftest.drop("Eg",1)
 y_train1=np.asarray(dftrain['Eg']).astype('float')
 y_test1=np.asarray(dftest['Eg']).astype('float')
 
-X_inputf=np.array(Xf.T[1:60]).T
-X_train1f, X_test1f, y_train1f, y_test1f = train_test_split(X_inputf , yf, test_size=0.1, random_state=1)
+
 from sklearn.feature_selection import SelectKBest, chi2
 
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
