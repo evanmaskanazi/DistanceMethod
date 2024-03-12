@@ -411,68 +411,47 @@ for i in range(np.array(gsarr0).shape[0]):
     # gsarrinv[i] = 1 / (np.sum(gsarr[i][0:20]))
 splita = np.array_split(np.sort(gsarrinv), 10)
 
-err1 = np.empty((0, 4), float)
+err1 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[0]):
-        err1 = np.append(err1, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-        print(i)
-err2 = np.empty((0, 4), float)
+        err1 = np.append(err1, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err2 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[1]):
-        err2 = np.append(err2, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
+        err2 = np.append(err2, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
 
-err3 = np.empty((0, 4), float)
+err3 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[2]):
-        err3 = np.append(err3, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err4 = np.empty((0, 4), float)
+        err3 = np.append(err3,np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err4 =  np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[3]):
-        err4 = np.append(err4, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err5 = np.empty((0, 4), float)
+        err4 = np.append(err4, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err5 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[4]):
-        err5 = np.append(err5, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err6 = np.empty((0, 4), float)
+        err5 = np.append(err5, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err6 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[5]):
-        err6 = np.append(err6, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err7 = np.empty((0, 4), float)
+        err6 = np.append(err6,np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err7 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[6]):
-        err7 = np.append(err7, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err8 = np.empty((0, 4), float)
+        err7 = np.append(err7, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err8 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[7]):
-        err8 = np.append(err8, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err9 = np.empty((0, 4), float)
+        err8 = np.append(err8, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err9 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[8]):
-        err9 = np.append(err9, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err10 = np.empty((0, 4), float)
+        err9 = np.append(err9, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err10 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[9]):
-        err10 = np.append(err10, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                            np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                          axis=0)
+        err10 = np.append(err10, np.array([[trainout[i],y_test1[i],gsarrinv[i]]]),axis=0)
 Vec = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 VecStd = [np.mean(err1.T[0]), np.mean(err2.T[0]), np.mean(err3.T[0]), np.mean(err4.T[0]), np.mean(err5.T[0]),
           np.mean(err6.T[0]), np.mean(err7.T[0]), np.mean(err8.T[0]), np.mean(err9.T[0]), np.mean(err10.T[0])]
@@ -487,68 +466,47 @@ gsarrinv2 = gsarrinv
 gsarrinv = disttest2
 splita = np.array_split(np.sort(gsarrinv), 10)
 
-err1 = np.empty((0, 4), float)
+err1 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[0]):
-        err1 = np.append(err1, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-        print(i)
-err2 = np.empty((0, 4), float)
+        err1 = np.append(err1, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err2 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[1]):
-        err2 = np.append(err2, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
+        err2 = np.append(err2, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
 
-err3 = np.empty((0, 4), float)
+err3 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[2]):
-        err3 = np.append(err3, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err4 = np.empty((0, 4), float)
+        err3 = np.append(err3,np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err4 =  np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[3]):
-        err4 = np.append(err4, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err5 = np.empty((0, 4), float)
+        err4 = np.append(err4, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err5 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[4]):
-        err5 = np.append(err5, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err6 = np.empty((0, 4), float)
+        err5 = np.append(err5, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err6 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[5]):
-        err6 = np.append(err6, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err7 = np.empty((0, 4), float)
+        err6 = np.append(err6,np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err7 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[6]):
-        err7 = np.append(err7, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err8 = np.empty((0, 4), float)
+        err7 = np.append(err7, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err8 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[7]):
-        err8 = np.append(err8, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err9 = np.empty((0, 4), float)
+        err8 = np.append(err8, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err9 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[8]):
-        err9 = np.append(err9, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err10 = np.empty((0, 4), float)
+        err9 = np.append(err9, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err10 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[9]):
-        err10 = np.append(err10, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                            np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                          axis=0)
+        err10 = np.append(err10, np.array([[trainout[i],y_test1[i],gsarrinv[i]]]),axis=0)
 Vec = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 VecStdv = [np.mean(err1.T[0]), np.mean(err2.T[0]), np.mean(err3.T[0]), np.mean(err4.T[0]), np.mean(err5.T[0]),
            np.mean(err6.T[0]), np.mean(err7.T[0]), np.mean(err8.T[0]), np.mean(err9.T[0]), np.mean(err10.T[0])]
@@ -603,68 +561,47 @@ for i in range(np.array(gsarr0).shape[0]):
     # gsarrinv[i] = 1 / (np.sum(gsarr[i][0:20]))
 splita = np.array_split(np.sort(gsarrinv), 10)
 
-err1 = np.empty((0, 4), float)
+err1 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[0]):
-        err1 = np.append(err1, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-        print(i)
-err2 = np.empty((0, 4), float)
+        err1 = np.append(err1, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err2 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[1]):
-        err2 = np.append(err2, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
+        err2 = np.append(err2, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
 
-err3 = np.empty((0, 4), float)
+err3 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[2]):
-        err3 = np.append(err3, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err4 = np.empty((0, 4), float)
+        err3 = np.append(err3,np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err4 =  np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[3]):
-        err4 = np.append(err4, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err5 = np.empty((0, 4), float)
+        err4 = np.append(err4, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err5 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[4]):
-        err5 = np.append(err5, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err6 = np.empty((0, 4), float)
+        err5 = np.append(err5, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err6 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[5]):
-        err6 = np.append(err6, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err7 = np.empty((0, 4), float)
+        err6 = np.append(err6,np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err7 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[6]):
-        err7 = np.append(err7, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err8 = np.empty((0, 4), float)
+        err7 = np.append(err7, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err8 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[7]):
-        err8 = np.append(err8, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err9 = np.empty((0, 4), float)
+        err8 = np.append(err8, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err9 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[8]):
-        err9 = np.append(err9, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err10 = np.empty((0, 4), float)
+        err9 = np.append(err9, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err10 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[9]):
-        err10 = np.append(err10, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                            np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                          axis=0)
+        err10 = np.append(err10, np.array([[trainout[i],y_test1[i],gsarrinv[i]]]),axis=0)
 Vec = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 VecStdN = [np.mean(err1.T[0]), np.mean(err2.T[0]), np.mean(err3.T[0]), np.mean(err4.T[0]), np.mean(err5.T[0]),
           np.mean(err6.T[0]), np.mean(err7.T[0]), np.mean(err8.T[0]), np.mean(err9.T[0]), np.mean(err10.T[0])]
@@ -685,68 +622,47 @@ gsarrinv2 = gsarrinv
 gsarrinv = disttest2
 splita = np.array_split(np.sort(gsarrinv), 10)
 
-err1 = np.empty((0, 4), float)
+err1 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[0]):
-        err1 = np.append(err1, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-        print(i)
-err2 = np.empty((0, 4), float)
+        err1 = np.append(err1, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err2 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[1]):
-        err2 = np.append(err2, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
+        err2 = np.append(err2, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
 
-err3 = np.empty((0, 4), float)
+err3 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[2]):
-        err3 = np.append(err3, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err4 = np.empty((0, 4), float)
+        err3 = np.append(err3,np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err4 =  np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[3]):
-        err4 = np.append(err4, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err5 = np.empty((0, 4), float)
+        err4 = np.append(err4, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err5 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[4]):
-        err5 = np.append(err5, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err6 = np.empty((0, 4), float)
+        err5 = np.append(err5, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err6 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[5]):
-        err6 = np.append(err6, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err7 = np.empty((0, 4), float)
+        err6 = np.append(err6,np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err7 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[6]):
-        err7 = np.append(err7, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err8 = np.empty((0, 4), float)
+        err7 = np.append(err7, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err8 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[7]):
-        err8 = np.append(err8, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err9 = np.empty((0, 4), float)
+        err8 = np.append(err8, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err9 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[8]):
-        err9 = np.append(err9, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                          np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                         axis=0)
-err10 = np.empty((0, 4), float)
+        err9 = np.append(err9, np.array([[trainout[i], y_test1[i],gsarrinv[i]]]),axis=0)
+err10 = np.empty((0, 3), float)
 for i in range(len(gsarrinv)):
     if (gsarrinv[i] in splita[9]):
-        err10 = np.append(err10, np.array([[trainout[i], np.array(trainpdf1).T[int(np.array(X).shape[1] + 1)][i],
-                                            np.array(trainpdf1).T[int(np.array(X).shape[1] + 2)][i], gsarrinv[i]]]),
-                          axis=0)
+        err10 = np.append(err10, np.array([[trainout[i],y_test1[i],gsarrinv[i]]]),axis=0)
 Vec = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 VecStdGSv = [np.mean(err1.T[0]), np.mean(err2.T[0]), np.mean(err3.T[0]), np.mean(err4.T[0]), np.mean(err5.T[0]),
            np.mean(err6.T[0]), np.mean(err7.T[0]), np.mean(err8.T[0]), np.mean(err9.T[0]), np.mean(err10.T[0])]
