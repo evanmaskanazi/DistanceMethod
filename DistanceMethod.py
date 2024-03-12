@@ -228,6 +228,7 @@ pca = PCA(n_components=5)
 
 pcaifit=pca.fit(np.array(X.T[1:60]))
 X_inputpca=np.vstack((np.array(X.T[1:60]),pcaifit.components_)).T
+
 X_input=np.array(X)
 
 X_train1=dftrain.drop("Eg",1)
@@ -248,10 +249,8 @@ sfs = SFS(SVR(),
           cv = 0)
 from sklearn.feature_selection import RFE
 rfe = RFE(estimator=RandomForestRegressor(), n_features_to_select=5)
-from sklearn.feature_selection import SequentialFeatureSelector
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.datasets import load_iris
 
+'best feat 6 15 18 20 24'
 
 
 steps = [('scaler', StandardScaler()), ('SVM', SVR())]
@@ -267,6 +266,7 @@ def my_kernel(X, Y, gamma=0.1):
     K *= -gamma
     np.exp(pow(K,0.25), pow(K,0.25))  # exponentiate K in-place
     return K
+
 
 
 import xgboost
@@ -291,15 +291,16 @@ param_distxgo = {'n_estimators': [100],
              }
 
 
-
 grid1=linear_model.LinearRegression()
 
 grid.fit(X_train1, y_train1)
 grid1.fit(X_train1,y_train1)
+
 svr_score = grid.score(X_train1,y_train1)
 svr_score1 = grid.score(X_test1,y_test1)
 y_predicted1 = grid.predict(X_test1)
 y_predicted00 = grid.predict(X_test1)
+
 
 
 prederror=np.zeros(len(y_predicted1))
@@ -314,24 +315,28 @@ for i in range(len(y_predicted1)):
         preddir[i]=-1
 
 
+
 stack1=np.array(np.vstack((np.array(X_test1).T,prederror,y_test1,y_predicted1)))
 
 
 print(y_test1,'y test 1')
+
 print(y_predicted1,'y pred 1')
+
 print(mean_absolute_error(y_predicted1,y_test1))
 
-
 trainpdf1=stack1.T
+print(5)
 
 #EfEg
+
 trainint=np.array(trainpdf1.T[0:int(np.array(X_train1).shape[1])].T)
+
+
 print(np.array(trainint).shape,'trainint')
 
 #EfEg
-
 trainout=np.array(trainpdf1).T[int(np.array(X_train1).shape[1])]
-
 
 
 
@@ -339,18 +344,15 @@ trainout=np.array(trainpdf1).T[int(np.array(X_train1).shape[1])]
 from sklearn.inspection import permutation_importance
 grid0= GridSearchCV(pipeline, param_grid= {'SVM__C':[100], 'SVM__gamma':['auto'], 'SVM__kernel': ['rbf'],
 'SVM__epsilon':[0.001]}, cv=5)
-#grid0=RandomForestRegressor(n_estimators=100, criterion='mse', max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features='auto', max_leaf_nodes=None, min_impurity_decrease=0.0,
-#                                 bootstrap=True, oob_score=False, n_jobs=None, random_state=None,
-#                                   verbose=0, warm_start=False, ccp_alpha=0.0, max_samples=None)
-#grid0=RandomizedSearchCV(estimator = xboostr,
-#   param_distributions = param_distxg, n_iter = 100, cv = 10,
-#   verbose=2, random_state=42, n_jobs = -1)
 grid0.fit(trainint,trainout)
 
 r = permutation_importance(grid0,trainint, trainout,n_repeats=30,
                           random_state=0)
 
 
+
+
+#trainpdf1=np.vstack((stack1.T,stack2.T,stack3.T,stack4.T,stack5.T,stack6.T,stack7.T,stack8.T,stack9.T,stack10.T))
 def gs(X):
     Q, R = np.linalg.qr(X)
     return Q
@@ -367,13 +369,19 @@ def gram_schmidt(A):
         A[:, j] = A[:, j] / np.linalg.norm(A[:, j])
     return A
 
-
+#gstest=np.array(trainint)
 gstest=gs(np.array(trainint))
+#gstest=gram_schmidt(np.array(trainint))
+#gstest=np.array(trainint)
 gsarr=np.zeros((np.array(gstest).shape[0],np.array(gstest).shape[0]))
-
+#gsarr=np.zeros((500,500))
 print(np.array(gsarr).shape[0],'int array test')
 print(np.array(gstest).shape,np.array(gstest)[0],'int array gs')
 
+print(np.array(gstest[0]))
+for i in range(np.array(gstest).shape[1]):
+    #gstest.T[i]=gstest.T[i]*math.exp(pow(r.importances_mean[i],0.5))
+    gstest.T[i] = gstest.T[i] * (1.0*pow(r.importances_mean[i],0.5) + 0.0)
 print(np.array(gstest[0]))
 
 
@@ -456,7 +464,7 @@ Vec = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 VecStd = [np.mean(err1.T[0]), np.mean(err2.T[0]), np.mean(err3.T[0]), np.mean(err4.T[0]), np.mean(err5.T[0]),
           np.mean(err6.T[0]), np.mean(err7.T[0]), np.mean(err8.T[0]), np.mean(err9.T[0]), np.mean(err10.T[0])]
 
-A = trainint
+A = np.array(X_train1)
 #A = np.array(np.array([x for x in X_input.tolist() if x not in trainint.tolist()]))
 disttest2 = np.zeros(np.array(trainint).shape[0])
 for i in range(np.array(trainint).shape[0]):
@@ -607,16 +615,16 @@ VecStdN = [np.mean(err1.T[0]), np.mean(err2.T[0]), np.mean(err3.T[0]), np.mean(e
           np.mean(err6.T[0]), np.mean(err7.T[0]), np.mean(err8.T[0]), np.mean(err9.T[0]), np.mean(err10.T[0])]
 
 
-A = gs(trainint)
-#A = gs(np.array(np.array([x for x in X_input.tolist() if x not in trainint.tolist()])))
-trainintF=trainint
+#A = gs(trainint)
+A = gs(np.array(X_train1))
+X_test1F=X_test1
 for i in range(np.array(A).shape[1]):
     # gstest.T[i]=gstest.T[i]*math.exp(pow(r.importances_mean[i],0.5))
     A.T[i] = A.T[i] * (1.0 * pow(r.importances_mean[i], 0.5) + 0.0)
-    trainintF.T[i] = trainintF.T[i] * (1.0 * pow(r.importances_mean[i], 0.5) + 0.0)
+    X_test1F.T[i] = X_test1F.T[i] * (1.0 * pow(r.importances_mean[i], 0.5) + 0.0)
 disttest2 = np.zeros(np.array(trainint).shape[0])
 for i in range(np.array(trainint).shape[0]):
-    disttest2[i] = np.sum(spatial.KDTree(A).query(gs(np.array(trainintF))[i], 10)[0]) / 10
+    disttest2[i] = np.sum(spatial.KDTree(A).query(gs(np.array(X_test1F))[i], 10)[0]) / 10
 
 gsarrinv2 = gsarrinv
 gsarrinv = disttest2
@@ -701,3 +709,7 @@ ax2.spines['left'].set_color('black')
 plt.xlabel('Group Number', fontsize=15)
 plt.ylabel('Error (Counts)', fontsize=15)
 plt.savefig('test.svg')
+print(np.sum(abs(np.array(VecStd)-np.mean(trainout)))/np.mean(trainout))
+print(np.sum(abs(np.array(VecStdv)-np.mean(trainout)))/np.mean(trainout))
+print("GS/FT", scipy.stats.spearmanr(Vec,VecStd)[0])
+print("No GS/FT", scipy.stats.spearmanr(Vec,VecStdv)[0])
