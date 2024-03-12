@@ -150,65 +150,24 @@ dftest0 = pd.read_csv(r'testEgEf.txt')
 dftrain0 = pd.read_csv(r'trainEgEf.txt')
 dftest=dftest0.drop("Ef",1)
 dftrain=dftrain0.drop("Ef",1)
-#df=dff.drop("E",1)
+
 Xtrainshuffle = np.loadtxt("Xtrainshuffle.txt")
 Xlatshuffle = np.loadtxt("Xlatshuffle.txt")
 
-#X=df.drop("Eg",1)
-X=np.array(rows).T[4:29].T.astype('float')
-#X=np.array(dfp).T[7:77].T.astype('float')
-#X=dfskill.drop("ActionsInPAC",1)
-#X=np.array(dftet.T[0:5]).T
-#X=dfpark.drop("PPE",1)
-#X=np.array(dfday).T[0:14].T.astype('float')
-#X=np.array(dfhour).T[0:14].T.astype('float')
-#X=np.array(datahydro).T[0:6].T.astype('float')
-#X=dfsuperconduct.drop("critical_temp",1)
-#X=dfforest.drop("area",1)
-#X=dfenergy.drop("rv1",1)
-#X=dfskillcraft.drop("ComplexAbilitiesUsed",1)
-#X=dfslice.drop("reference",1)
-#X=np.array(dfUCICBM).T[0:16].T.astype('float')
-#X=np.array(Xtrainshuffle[0:5250])[:, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 14, 15, 18, 19]]
 
+X=np.array(rows).T[4:29].T.astype('float')
 df['Ef'] = df['Ef'].astype('float64')
 dfskill['ActionsinPAC'] = dfskill['ActionsInPAC'].astype('float64')
 dfpark['PPE'] = dfpark['PPE'].astype('float64')
-
-
-
-
-#y = np.asarray(df['Eg'])
 y=np.array(rows).T[2].astype('float')
-#y = np.asarray(dfp['energy_above_hull (meV/atom)']).astype('float')
-#y=np.asarray(dfskill['ActionsInPAC'])
-#y=np.array(dftet).T[5]
-#y=np.asarray(dfpark['PPE'])
-#y=np.asarray(dfday['cnt']).astype('float')
-#y=np.asarray(dfhour['cnt']).astype('float')
-#y=np.array(datahydro).T[6].astype('float')
-#y=np.asarray(dfsuperconduct['critical_temp']).astype('float')
-#y=np.asarray(dfforest['area']).astype('float')
-#y=np.asarray(dfenergy['rv1']).astype('float')
-#y=np.asarray(dfskillcraft['ComplexAbilitiesUsed']).astype('float')
-#y=np.asarray(dfslice['reference']).astype('float')
-#y=np.array(dfUCICBM).T[17]
-#y=np.array(Xlatshuffle[0:5250]).T[5]
 
-#for i in range(len(y)):
-  #  if (y[i] <=0):
-        #y[i]=0
-   #     print(y[i])
+
+
 print(y[0:30],'ytest')
 print(y[30:60],'ytest 2')
 print(y[60:90],'ytest 3')
 
-Xf=df.drop("Ef",1)
-df['Ef'] = df['Ef'].astype('float64')
-yf = np.asarray(df['Ef'])
-#dffinal = pd.read_excel(r'C:/Users/Downloads/final_candidates.xlsx')
-#dfform = pd.read_excel(r'C:/Users/Downloads/formability_database.xlsx')
-#dfstab = pd.read_excel(r'C:/Users/Downloads/stability_database.xlsx')
+
 
 # Model 3 - Support Vector Regression (SVR)
 from sklearn.svm import SVR
