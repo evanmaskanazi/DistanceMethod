@@ -116,57 +116,6 @@ param_distxg = {'n_estimators': stats.randint(50, 150),
                 'seed':[2]
              }
 
-import csv
-file = open("DiluteSolute.csv")
-csvreader = csv.reader(file)
-header = next(csvreader)
-print(header)
-rows = []
-for row in csvreader:
-    rows.append(row)
-
-df = pd.read_csv(r'C:/Users/Downloads/combine.csv') #Combined ABX3 and A2BB'X6 Perovskite Structures.
-dfp=pd.read_csv(r'PerovskiteStability.csv')
-dfskill = pd.read_csv(r'Skillcraft.txt')
-dftet0 = pd.read_csv(r'Tetuanpower.csv')
-dftet=dftet0.drop("DateTime",1)
-dfpark = pd.read_csv(r'parkinson.data')
-dfday0 = pd.read_csv(r'day.csv')
-dfday=dfday0.drop("dteday",1)
-dfhour0 = pd.read_csv(r'hour.csv')
-dfhour=dfhour0.drop("dteday",1)
-datahydro =  pd.read_csv('yachthydro.data', header=None, delimiter=r"\s+")
-dfsuperconduct = pd.read_csv(r'superconductivity.csv')
-dfforest00 = pd.read_csv(r'forestfire.csv')
-dfforest0=dfforest00.drop("month",1)
-dfforest=dfforest0.drop("day",1)
-dfenergy00 = pd.read_csv(r'energydatacomplete.txt')
-dfenergy0=dfenergy00.drop("date",1)
-dfenergy=dfenergy0.drop("rv2",1)
-dfskillcraft = pd.read_csv(r'skillcraft.txt')
-dfslice = pd.read_csv(r'slice_localization_data.csv')
-dfUCICBM = pd.read_csv(r'UCICBM.txt', header=None, delimiter=r"\s+")
-dftest0 = pd.read_csv(r'testEgEf.txt')
-dftrain0 = pd.read_csv(r'trainEgEf.txt')
-dftest=dftest0.drop("Ef",1)
-dftrain=dftrain0.drop("Ef",1)
-
-Xtrainshuffle = np.loadtxt("Xtrainshuffle.txt")
-Xlatshuffle = np.loadtxt("Xlatshuffle.txt")
-
-
-X=np.array(rows).T[4:29].T.astype('float')
-df['Ef'] = df['Ef'].astype('float64')
-dfskill['ActionsinPAC'] = dfskill['ActionsInPAC'].astype('float64')
-dfpark['PPE'] = dfpark['PPE'].astype('float64')
-y=np.array(rows).T[2].astype('float')
-
-
-
-print(y[0:30],'ytest')
-print(y[30:60],'ytest 2')
-print(y[60:90],'ytest 3')
-
 
 
 # Model 3 - Support Vector Regression (SVR)
@@ -182,21 +131,9 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 tsne= TSNE(n_components=4, learning_rate='auto',init='random')
 ldac=LinearDiscriminantAnalysis(n_components=5)
 pca = PCA(n_components=5)
-
-
-
-pcaifit=pca.fit(np.array(X.T[1:60]))
-X_inputpca=np.vstack((np.array(X.T[1:60]),pcaifit.components_)).T
-
-X_input=np.array(X)
-
-X_train1=dftrain.drop("Eg",1)
-X_test1=dftest.drop("Eg",1)
-y_train1=np.asarray(dftrain['Eg']).astype('float')
-y_test1=np.asarray(dftest['Eg']).astype('float')
-
-
 from sklearn.feature_selection import SelectKBest, chi2
+import xgboost
+from xgboost import XGBRegressor
 
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 sfs = SFS(SVR(),
@@ -208,7 +145,14 @@ sfs = SFS(SVR(),
 from sklearn.feature_selection import RFE
 rfe = RFE(estimator=RandomForestRegressor(), n_features_to_select=5)
 
-'best feat 6 15 18 20 24'
+dftest0 = pd.read_csv(r'testEgEf.txt')
+dftrain0 = pd.read_csv(r'trainEgEf.txt')
+dftest=dftest0.drop("Ef",1)
+dftrain=dftrain0.drop("Ef",1)
+X_train1=dftrain.drop("Eg",1)
+X_test1=dftest.drop("Eg",1)
+y_train1=np.asarray(dftrain['Eg']).astype('float')
+y_test1=np.asarray(dftest['Eg']).astype('float')
 
 
 steps = [('scaler', StandardScaler()), ('SVM', SVR())]
@@ -216,19 +160,11 @@ pipeline = Pipeline(steps)
 grid = GridSearchCV(pipeline, param_grid= {'SVM__C':[100], 'SVM__gamma':['auto'], 'SVM__kernel': ['rbf'],
 'SVM__epsilon':[0.001]}, cv=5)
 
-from sklearn.gaussian_process.kernels import ExpSineSquared
-kernel1 = ExpSineSquared(length_scale=1, periodicity=1)
-from sklearn.metrics.pairwise import euclidean_distances
-def my_kernel(X, Y, gamma=0.1):
-    K = euclidean_distances(X, Y, squared=True)
-    K *= -gamma
-    np.exp(pow(K,0.25), pow(K,0.25))  # exponentiate K in-place
-    return K
 
 
 
-import xgboost
-from xgboost import XGBRegressor
+
+
 xboostr = XGBRegressor()
 param_distxg = {'n_estimators': stats.randint(50, 150),
               'learning_rate': stats.uniform(0.01, 0.6),
@@ -266,14 +202,7 @@ preddir=np.zeros(len(y_predicted1))
 prederrordist=np.zeros(len(y_predicted1))
 for i in range(len(y_predicted1)):
     prederror[i]=abs(y_predicted1[i] - y_test1[i])
-    prederrordist[i] = y_predicted1[i] - y_test1[i]
-    if (prederrordist[i]>0):
-        preddir[i]=1
-    else:
-        preddir[i]=-1
-
-
-
+    
 stack1=np.array(np.vstack((np.array(X_test1).T,prederror,y_test1,y_predicted1)))
 
 
@@ -327,18 +256,16 @@ def gram_schmidt(A):
         A[:, j] = A[:, j] / np.linalg.norm(A[:, j])
     return A
 
-#gstest=np.array(trainint)
+
 gstest=gs(np.array(trainint))
-#gstest=gram_schmidt(np.array(trainint))
-#gstest=np.array(trainint)
+
 gsarr=np.zeros((np.array(gstest).shape[0],np.array(gstest).shape[0]))
-#gsarr=np.zeros((500,500))
+
 print(np.array(gsarr).shape[0],'int array test')
 print(np.array(gstest).shape,np.array(gstest)[0],'int array gs')
 
 print(np.array(gstest[0]))
 for i in range(np.array(gstest).shape[1]):
-    #gstest.T[i]=gstest.T[i]*math.exp(pow(r.importances_mean[i],0.5))
     gstest.T[i] = gstest.T[i] * (1.0*pow(r.importances_mean[i],0.5) + 0.0)
 print(np.array(gstest[0]))
 
@@ -347,34 +274,18 @@ print(np.array(gstest[0]))
 gsarr0 = np.zeros((np.array(gstest).shape[0], np.array(gstest).shape[0]))
 for i in range(np.array(gsarr).shape[0]):
     for j in range(np.array(gsarr).shape[0]):
-        # for i in range(500):
-        #   for j in range(500):
-        # gsarr[i][j] = math.exp(mean_absolute_error(np.array(gstest)[i], np.array(gstest)[j]))
         if (i != j and (np.array_equal(gstest[i], gstest[j]) == False)):
-            # gsarr0[i][j] = pow(math.exp(pow(mean_absolute_error(pow(np.array(gstest)[i],1.0), pow(np.array(gstest)[j],1.0)),0.5) ),-1.0)
+          
             gsarr0[i][j] = pow(np.linalg.norm(np.array(gstest)[i] - np.array(gstest)[j]),
                                -1.0)
-            # gsarr[i][j] = pow(math.exp(pow(mean_absolute_error(pow(np.array(gstest)[i],1.0), pow(np.array(gstest)[j],1.0))
-            #                            *pow((abs(scipy.stats.pearsonr(np.array(gstest)[i],np.array(gstest)[j])[0]
-            #                                    +scipy.stats.spearmanr(np.array(gstest)[i], np.array(gstest)[j])[0]
-            #                                 )),-1.0),0.5) ),-1.0)
         elif (i == j):
             gsarr0[i][j] = 0
-        # gsarr[i][j] = (0.0)*(abs(scipy.stats.spearmanr(np.array(gstest)[i], np.array(gstest)[j])[0]))\
-        #             + pow(mean_squared_error(pow(np.array(gstest)[i],1.0), pow(np.array(gstest)[j],1.0)),0.5)+\
-        #              +   (1.0-r2_score(np.array(gstest)[i], np.array(gstest)[j]) )+ \
-        #           pow(mean_absolute_error(np.array(gstest)[i], np.array(gstest)[j]),0.5) \
-        #          +0.0*(abs(spatial.distance.cosine(np.array(gstest)[i], np.array(gstest)[j])))
-    #   print(i,j,'ij')
-#       gsarr[i][j] = r2_score(np.array(gstest)[i], np.array(gstest)[j])
+      
 gsarrinv = np.zeros(np.array(gsarr).shape[0])
 
 for i in range(np.array(gsarr0).shape[0]):
-    # gsarrinv[i]=1/(np.sum(gsarr,axis=1)[i])
     gsarrinv[i] = 1 / (pow(np.sum(gsarr0, axis=1)[i], 1))
-    # gsarrinv[i] = 1 / (pow(np.sum(gsarr, axis=1)[i], 1))
-    # gsarr[i][::-1].sort()
-    # gsarrinv[i] = 1 / (np.sum(gsarr[i][0:20]))
+   
 splita = np.array_split(np.sort(gsarrinv), 10)
 
 err1 = np.empty((0, 3), float)
@@ -423,7 +334,6 @@ VecStd = [np.mean(err1.T[0]), np.mean(err2.T[0]), np.mean(err3.T[0]), np.mean(er
           np.mean(err6.T[0]), np.mean(err7.T[0]), np.mean(err8.T[0]), np.mean(err9.T[0]), np.mean(err10.T[0])]
 
 A = np.array(X_train1)
-#A = np.array(np.array([x for x in X_input.tolist() if x not in trainint.tolist()]))
 disttest2 = np.zeros(np.array(trainint).shape[0])
 for i in range(np.array(trainint).shape[0]):
     disttest2[i] = np.sum(spatial.KDTree(A).query(np.array(trainint)[i], 10)[0]) / 10
@@ -480,51 +390,29 @@ VecStdv = [np.mean(err1.T[0]), np.mean(err2.T[0]), np.mean(err3.T[0]), np.mean(e
 
 
 gstest=np.array(trainint)
-#gstest=gram_schmidt(np.array(trainint))
-#gstest=np.array(trainint)
 gsarr=np.zeros((np.array(gstest).shape[0],np.array(gstest).shape[0]))
-#gsarr=np.zeros((500,500))
 print(np.array(gsarr).shape[0],'int array test')
 print(np.array(gstest).shape,np.array(gstest)[0],'int array gs')
 
 print(np.array(gstest[0]))
-for i in range(np.array(gstest).shape[1]):
-    #gstest.T[i]=gstest.T[i]*math.exp(pow(r.importances_mean[i],0.5))
-    #gstest.T[i] = gstest.T[i] * (1.0*pow(r.importances_mean[i],0.5) + 0.0)
-    gstest.T[i] = gstest.T[i] * (1.0 * pow(abs(r.importances_mean[i]), 0.0) + 0.0)
+
 print(np.array(gstest[0]))
 
 gsarr0 = np.zeros((np.array(gstest).shape[0], np.array(gstest).shape[0]))
 for i in range(np.array(gsarr).shape[0]):
-    for j in range(np.array(gsarr).shape[0]):
-        # for i in range(500):
-        #   for j in range(500):
-        # gsarr[i][j] = math.exp(mean_absolute_error(np.array(gstest)[i], np.array(gstest)[j]))
+    for j in range(np.array(gsarr).shape[0])
         if (i != j and (np.array_equal(gstest[i], gstest[j]) == False)):
-            # gsarr0[i][j] = pow(math.exp(pow(mean_absolute_error(pow(np.array(gstest)[i],1.0), pow(np.array(gstest)[j],1.0)),0.5) ),-1.0)
+           
             gsarr0[i][j] = pow(np.linalg.norm(np.array(gstest)[i] - np.array(gstest)[j]),
                                -1.0)
-            # gsarr[i][j] = pow(math.exp(pow(mean_absolute_error(pow(np.array(gstest)[i],1.0), pow(np.array(gstest)[j],1.0))
-            #                            *pow((abs(scipy.stats.pearsonr(np.array(gstest)[i],np.array(gstest)[j])[0]
-            #                                    +scipy.stats.spearmanr(np.array(gstest)[i], np.array(gstest)[j])[0]
-            #                                 )),-1.0),0.5) ),-1.0)
         elif (i == j):
             gsarr0[i][j] = 0
-        # gsarr[i][j] = (0.0)*(abs(scipy.stats.spearmanr(np.array(gstest)[i], np.array(gstest)[j])[0]))\
-        #             + pow(mean_squared_error(pow(np.array(gstest)[i],1.0), pow(np.array(gstest)[j],1.0)),0.5)+\
-        #              +   (1.0-r2_score(np.array(gstest)[i], np.array(gstest)[j]) )+ \
-        #           pow(mean_absolute_error(np.array(gstest)[i], np.array(gstest)[j]),0.5) \
-        #          +0.0*(abs(spatial.distance.cosine(np.array(gstest)[i], np.array(gstest)[j])))
-    #   print(i,j,'ij')
-#       gsarr[i][j] = r2_score(np.array(gstest)[i], np.array(gstest)[j])
+        
 gsarrinv = np.zeros(np.array(gsarr).shape[0])
 
 for i in range(np.array(gsarr0).shape[0]):
-    # gsarrinv[i]=1/(np.sum(gsarr,axis=1)[i])
     gsarrinv[i] = 1 / (pow(np.sum(gsarr0, axis=1)[i], 1))
-    # gsarrinv[i] = 1 / (pow(np.sum(gsarr, axis=1)[i], 1))
-    # gsarr[i][::-1].sort()
-    # gsarrinv[i] = 1 / (np.sum(gsarr[i][0:20]))
+ 
 splita = np.array_split(np.sort(gsarrinv), 10)
 
 err1 = np.empty((0, 3), float)
@@ -573,11 +461,10 @@ VecStdN = [np.mean(err1.T[0]), np.mean(err2.T[0]), np.mean(err3.T[0]), np.mean(e
           np.mean(err6.T[0]), np.mean(err7.T[0]), np.mean(err8.T[0]), np.mean(err9.T[0]), np.mean(err10.T[0])]
 
 
-#A = gs(trainint)
+
 A = gs(np.array(X_train1))
 X_test1F=X_test1
 for i in range(np.array(A).shape[1]):
-    # gstest.T[i]=gstest.T[i]*math.exp(pow(r.importances_mean[i],0.5))
     A.T[i] = A.T[i] * (1.0 * pow(r.importances_mean[i], 0.5) + 0.0)
     X_test1F.T[i] = X_test1F.T[i] * (1.0 * pow(r.importances_mean[i], 0.5) + 0.0)
 disttest2 = np.zeros(np.array(trainint).shape[0])
