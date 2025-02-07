@@ -15,7 +15,7 @@ warnings.filterwarnings('ignore')
 
 
 def gs(A):
-    """Gram-Schmidt orthogonalization exactly as in original."""
+    """Gram-Schmidt orthogonalization ."""
     Q, R = np.linalg.qr(A)
     return Q
 
